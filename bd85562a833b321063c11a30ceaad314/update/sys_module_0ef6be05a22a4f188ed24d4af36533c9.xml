@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_module">
+    <sys_module action="INSERT_OR_UPDATE">
+        <content><![CDATA[import { gs, GlideRecord } from '@servicenow/glide'
+
+/**
+ * Process pending deployment requests
+ */
+export function processDeploymentQueue() {
+    try {
+        gs.info('Starting deployment queue processing')
+
+        // Find deployment requests that are in 'in_progress' state
+        const gr = new GlideRecord('x_165991_github_ap_deployment_request')
+        gr.addQuery('state', 'in_progress')
+        gr.addQuery('active', true)
+        gr.orderBy('sys_created_on')
+        gr.query()
+
+        let processedCount = 0
+
+        while (gr.next()) {
+            try {
+                processDeploymentRequest(gr)
+                processedCount++
+                
+                // Add small delay between processing requests
+                gs.sleep(1000)
+                
+            } catch (error) {
+                gs.error('Error processing deployment request ' + gr.getDisplayValue('number') + ': ' + error.message)
+                
+                // Update request with error
+                gr.setValue('state', 'failed')
+                gr.setValue('error_message', 'Processing error: ' + error.message)
+                gr.setValue('retry_count', parseInt(gr.getValue('retry_count') || '0') + 1)
+                gr.update()
+            }
+        }
+
+        gs.info('Deployment queue processing completed. Processed ' + processedCount + ' requests')
+
+    } catch (error) {
+        gs.error('Error in deployment queue processing: ' + error.message)
+    }
+}
+
+/**
+ * Process individual deployment request
+ */
+function processDeploymentRequest(deploymentGR) {
+    const repoUrl = deploymentGR.getValue('github_repo_url')
+    const branch = deploymentGR.getValue('branch_name') || 'main'
+    const targetInstance = deploymentGR.getValue('target_instance')
+    const appScope = deploymentGR.getValue('app_scope')
+
+    gs.info('Processing deployment request: ' + deploymentGR.getDisplayValue('number'))
+
+    // Simulate deployment processing (in real implementation, this would:
+    // 1. Download the repository archive
+    // 2. Extract and validate the ServiceNow application
+    // 3. Create update set or deploy directly to target instance
+    // 4. Monitor deployment status)
+    
+    // For this example, we'll simulate the deployment process
+    const simulateSuccess = Math.random() > 0.2 // 80% success rate for demonstration
+    
+    if (simulateSuccess) {
+        // Successful deployment
+        deploymentGR.setValue('state', 'completed')
+        deploymentGR.setValue('error_message', '')
+        
+        const successLog = (deploymentGR.getValue('deployment_log') || '') + 
+            '\\nDeployment successful at ' + gs.nowDateTime() +
+            '\\nTarget instance: ' + targetInstance +
+            '\\nApplication scope: ' + appScope
+        
+        deploymentGR.setValue('deployment_log', successLog)
+        
+        gs.info('Deployment completed successfully for request: ' + deploymentGR.getDisplayValue('number'))
+        
+    } else {
+        // Failed deployment
+        const retryCount = parseInt(deploymentGR.getValue('retry_count') || '0') + 1
+        const maxRetries = parseInt(gs.getProperty('x_165991_github_ap.max_retry_attempts', '3'))
+        
+        deploymentGR.setValue('retry_count', retryCount)
+        deploymentGR.setValue('error_message', 'Simulated deployment failure (demo)')
+        
+        if (retryCount >= maxRetries) {
+            deploymentGR.setValue('state', 'failed')
+            gs.error('Deployment failed after ' + maxRetries + ' attempts for request: ' + deploymentGR.getDisplayValue('number'))
+        } else {
+            // Will retry on next run
+            gs.warn('Deployment failed, will retry (' + retryCount + '/' + maxRetries + ') for request: ' + deploymentGR.getDisplayValue('number'))
+        }
+        
+        const failureLog = (deploymentGR.getValue('deployment_log') || '') + 
+            '\\nDeployment attempt ' + retryCount + ' failed at ' + gs.nowDateTime() +
+            '\\nError: Simulated failure for demonstration'
+        
+        deploymentGR.setValue('deployment_log', failureLog)
+    }
+    
+    deploymentGR.update()
+}]]></content>
+        <external_source>false</external_source>
+        <path>x_165991_github_ap/x-165991-github-app-d/1.0.0/src/server/scheduled-scripts/deployment-processor.js</path>
+        <sys_class_name>sys_module</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-03-26 08:47:36</sys_created_on>
+        <sys_id>0ef6be05a22a4f188ed24d4af36533c9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_165991_github_ap/x-165991-github-app-d/1.0.0/src/server/scheduled-scripts/deployment-processor.js</sys_name>
+        <sys_package display_value="Github App D" source="x_165991_github_ap">bd85562a833b321063c11a30ceaad314</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Github App D">bd85562a833b321063c11a30ceaad314</sys_scope>
+        <sys_update_name>sys_module_0ef6be05a22a4f188ed24d4af36533c9</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-03-26 08:47:36</sys_updated_on>
+    </sys_module>
+</record_update>

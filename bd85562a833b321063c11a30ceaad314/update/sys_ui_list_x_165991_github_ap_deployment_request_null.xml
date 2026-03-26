@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_list parent="" relationship="" sys_domain="global" table="x_165991_github_ap_deployment_request" version="2" view="">
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>number</element>
+            <list_id display_value="x_165991_github_ap_deployment_request" element="NULL" name="x_165991_github_ap_deployment_request" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">e47f5a6a837b321063c11a30ceaad305</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>0</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-03-26 08:58:02</sys_created_on>
+            <sys_id>647f5a6a837b321063c11a30ceaad308</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-03-26 08:58:02</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>app_scope</element>
+            <list_id display_value="x_165991_github_ap_deployment_request" element="NULL" name="x_165991_github_ap_deployment_request" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">e47f5a6a837b321063c11a30ceaad305</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>1</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-03-26 08:58:02</sys_created_on>
+            <sys_id>647f5a6a837b321063c11a30ceaad309</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-03-26 08:58:02</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>auto_deploy</element>
+            <list_id display_value="x_165991_github_ap_deployment_request" element="NULL" name="x_165991_github_ap_deployment_request" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">e47f5a6a837b321063c11a30ceaad305</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>2</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-03-26 08:58:02</sys_created_on>
+            <sys_id>ec7f562e837b321063c11a30ceaad326</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-03-26 08:58:02</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>branch_name</element>
+            <list_id display_value="x_165991_github_ap_deployment_request" element="NULL" name="x_165991_github_ap_deployment_request" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">e47f5a6a837b321063c11a30ceaad305</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>3</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-03-26 08:58:02</sys_created_on>
+            <sys_id>647f562e837b321063c11a30ceaad327</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-03-26 08:58:02</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>completed_on</element>
+            <list_id display_value="x_165991_github_ap_deployment_request" element="NULL" name="x_165991_github_ap_deployment_request" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">e47f5a6a837b321063c11a30ceaad305</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>4</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-03-26 08:58:02</sys_created_on>
+            <sys_id>e87f562e837b321063c11a30ceaad327</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-03-26 08:58:02</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>deployment_log</element>
+            <list_id display_value="x_165991_github_ap_deployment_request" element="NULL" name="x_165991_github_ap_deployment_request" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">e47f5a6a837b321063c11a30ceaad305</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>5</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-03-26 08:58:02</sys_created_on>
+            <sys_id>607f562e837b321063c11a30ceaad328</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-03-26 08:58:02</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>deployment_notes</element>
+            <list_id display_value="x_165991_github_ap_deployment_request" element="NULL" name="x_165991_github_ap_deployment_request" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">e47f5a6a837b321063c11a30ceaad305</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>6</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-03-26 08:58:02</sys_created_on>
+            <sys_id>e47f562e837b321063c11a30ceaad328</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-03-26 08:58:02</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>deployment_type</element>
+            <list_id display_value="x_165991_github_ap_deployment_request" element="NULL" name="x_165991_github_ap_deployment_request" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">e47f5a6a837b321063c11a30ceaad305</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>7</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-03-26 08:58:02</sys_created_on>
+            <sys_id>6c7f562e837b321063c11a30ceaad328</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-03-26 08:58:02</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>error_message</element>
+            <list_id display_value="x_165991_github_ap_deployment_request" element="NULL" name="x_165991_github_ap_deployment_request" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">e47f5a6a837b321063c11a30ceaad305</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>8</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-03-26 08:58:02</sys_created_on>
+            <sys_id>e07f562e837b321063c11a30ceaad329</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-03-26 08:58:02</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>github_repo_url</element>
+            <list_id display_value="x_165991_github_ap_deployment_request" element="NULL" name="x_165991_github_ap_deployment_request" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">e47f5a6a837b321063c11a30ceaad305</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>9</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-03-26 08:58:02</sys_created_on>
+            <sys_id>687f562e837b321063c11a30ceaad329</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-03-26 08:58:02</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element/>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <name>x_165991_github_ap_deployment_request</name>
+            <parent/>
+            <position/>
+            <relationship/>
+            <sum>false</sum>
+            <sys_class_name>sys_ui_list</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-03-26 08:58:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>e47f5a6a837b321063c11a30ceaad305</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_165991_github_ap_deployment_request</sys_name>
+            <sys_package display_value="Github App D" source="x_165991_github_ap">bd85562a833b321063c11a30ceaad314</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Github App D">bd85562a833b321063c11a30ceaad314</sys_scope>
+            <sys_update_name>sys_ui_list_x_165991_github_ap_deployment_request_null</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-03-26 08:58:02</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_list>
+    </sys_ui_list>
+</record_update>

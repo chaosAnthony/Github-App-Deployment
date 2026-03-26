@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_module">
+    <sys_module action="INSERT_OR_UPDATE">
+        <content><![CDATA[import { gs } from '@servicenow/glide'
+import { GitHubAPI } from '../github/github-api.js'
+
+/**
+ * Validate GitHub repository and branch when deployment request is submitted
+ */
+export function validateDeploymentRequest(current, previous) {
+    // Only run when state changes to 'submitted'
+    if (current.getValue('state') !== 'submitted') {
+        return
+    }
+
+    const repoUrl = current.getValue('github_repo_url')
+    const branch = current.getValue('branch_name') || 'main'
+    const githubToken = current.getValue('github_token')
+
+    if (!repoUrl) {
+        gs.addErrorMessage('GitHub repository URL is required')
+        current.setAbortAction(true)
+        return
+    }
+
+    try {
+        // Initialize GitHub API with custom token if provided
+        const githubAPI = new GitHubAPI(githubToken)
+        
+        // Validate repository access
+        const validation = githubAPI.validateRepository(repoUrl, branch)
+        
+        if (!validation.success) {
+            current.setValue('state', 'draft')
+            current.setValue('error_message', 'Repository validation failed: ' + validation.error)
+            gs.addErrorMessage('Repository validation failed: ' + validation.error)
+            current.setAbortAction(true)
+            return
+        }
+
+        // Update deployment request with repository information
+        if (validation.repository) {
+            const repo = validation.repository
+            if (!current.getValue('app_scope')) {
+                // Try to extract scope from repository name or description
+                const scopeGuess = 'x_custom_' + repo.name.toLowerCase().replace(/[^a-z0-9]/g, '_')
+                current.setValue('app_scope', scopeGuess)
+            }
+            
+            // Log successful validation
+            const logMessage = 'Repository validated successfully\\n' +
+                'Repository: ' + repo.full_name + '\\n' +
+                'Branch: ' + branch + '\\n' +
+                'Last updated: ' + repo.updated_at
+            
+            current.setValue('deployment_log', logMessage)
+            gs.addInfoMessage('Repository validation successful')
+        }
+
+        // Set state to in_progress if auto_deploy is enabled
+        if (current.getValue('auto_deploy') === 'true' || current.getValue('auto_deploy') === true) {
+            const autoDeployEnabled = gs.getProperty('x_165991_github_ap.auto_deploy_enabled', 'true')
+            if (autoDeployEnabled === 'true') {
+                current.setValue('state', 'in_progress')
+                current.setValue('started_on', gs.nowDateTime())
+                gs.addInfoMessage('Deployment started automatically')
+            }
+        }
+
+    } catch (error) {
+        gs.error('Error validating deployment request: ' + error.message)
+        current.setValue('state', 'draft')
+        current.setValue('error_message', 'Validation error: ' + error.message)
+        gs.addErrorMessage('Validation error: ' + error.message)
+        current.setAbortAction(true)
+    }
+}]]></content>
+        <external_source>false</external_source>
+        <path>x_165991_github_ap/x-165991-github-app-d/1.0.0/src/server/business-rules/validate-deployment.js</path>
+        <sys_class_name>sys_module</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-03-26 08:47:36</sys_created_on>
+        <sys_id>f835f718911d407d8077a44f39026fdd</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_165991_github_ap/x-165991-github-app-d/1.0.0/src/server/business-rules/validate-deployment.js</sys_name>
+        <sys_package display_value="Github App D" source="x_165991_github_ap">bd85562a833b321063c11a30ceaad314</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Github App D">bd85562a833b321063c11a30ceaad314</sys_scope>
+        <sys_update_name>sys_module_f835f718911d407d8077a44f39026fdd</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-03-26 08:47:36</sys_updated_on>
+    </sys_module>
+</record_update>

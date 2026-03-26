@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_action_role">
+    <sys_ui_action_role action="INSERT_OR_UPDATE">
+        <sys_class_name>sys_ui_action_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-03-26 09:22:34</sys_created_on>
+        <sys_id>8034c8d45f0047a08b5c00fda26c5e09</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Submit for Deployment.x_165991_github_ap.deployment_admin</sys_name>
+        <sys_package display_value="Github App D" source="x_165991_github_ap">bd85562a833b321063c11a30ceaad314</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Github App D">bd85562a833b321063c11a30ceaad314</sys_scope>
+        <sys_ui_action display_value="Submit for Deployment">89e3177394ba42a9b7d7728a2da03e1b</sys_ui_action>
+        <sys_update_name>sys_ui_action_role_8034c8d45f0047a08b5c00fda26c5e09</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-03-26 09:22:34</sys_updated_on>
+        <sys_user_role display_value="x_165991_github_ap.deployment_admin" name="x_165991_github_ap.deployment_admin">4c0221d35a394424ae14adcc1704ae80</sys_user_role>
+    </sys_ui_action_role>
+</record_update>
