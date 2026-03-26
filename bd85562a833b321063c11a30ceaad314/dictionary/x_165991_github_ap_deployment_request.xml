@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="630d16e6837b321063c11a30ceaad3eb" label="GitHub Deployment Request" max_length="40" name="x_165991_github_ap_deployment_request" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Target Instance Credentials" mandatory="true" max_length="255" name="target_instance_credentials" type="string"/>
+        <element attributes="edge_encryption_enabled=true" default="main" label="GitHub Branch" max_length="100" name="github_branch" type="string"/>
+        <element attributes="edge_encryption_enabled=true" default="1.0.0" label="Application Version" max_length="50" name="application_version" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Target Instance URL" mandatory="true" max_length="255" name="target_instance_url" type="string"/>
+        <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" display="true" label="Request Number" max_length="40" name="number" read_only="true" type="string"/>
+        <element default="0" label="Retry Count" max_length="40" name="retry_count" read_only="true" type="integer"/>
+        <element choice="1" default="full_deployment" label="Deployment Type" max_length="40" name="deployment_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Full Deployment" sequence="0" value="full_deployment"/>
+                <element inactive_on_update="false" label="Update Set" sequence="1" value="update_set"/>
+                <element inactive_on_update="false" label="App Store" sequence="2" value="app_store"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" default="main" label="Branch Name" max_length="100" name="branch_name" type="string"/>
+        <element attributes="encode_utf8=false" default="javascript:gs.getUserID();" label="Requested By" max_length="32" name="requested_by" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Error Message" max_length="4000" name="error_message" read_only="true" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Target Instance" mandatory="true" max_length="100" name="target_instance" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Deployment Log" max_length="8000" name="deployment_log" read_only="true" type="string"/>
+        <element label="Auto Deploy" max_length="40" name="auto_deploy" type="boolean"/>
+        <element choice="1" default="draft" label="Deployment State" max_length="40" name="state" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Draft" sequence="0" value="draft"/>
+                <element inactive_on_update="false" label="Failed" sequence="4" value="failed"/>
+                <element inactive_on_update="false" label="Submitted" sequence="1" value="submitted"/>
+                <element inactive_on_update="false" label="Cancelled" sequence="5" value="cancelled"/>
+                <element inactive_on_update="false" label="In Progress" sequence="2" value="in_progress"/>
+                <element inactive_on_update="false" label="Deploying" sequence="2" value="deploying"/>
+                <element inactive_on_update="false" label="Deployed" sequence="3" value="deployed"/>
+                <element inactive_on_update="false" label="Ready for Deployment" sequence="1" value="ready_for_deployment"/>
+                <element inactive_on_update="false" label="Completed" sequence="3" value="completed"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="GitHub Token" max_length="255" name="github_token" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Application Scope" max_length="100" name="app_scope" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Started On" max_length="40" name="started_on" read_only="true" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true" label="Application Scope" mandatory="true" max_length="100" name="application_scope" type="string"/>
+        <element attributes="edge_encryption_enabled=true" default="javascript:gs.nowDateTime();" label="Requested On" max_length="40" name="requested_on" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true" label="GitHub Repository URL" mandatory="true" max_length="255" name="github_repo_url" type="string"/>
+        <element choice="1" default="normal" label="Priority" max_length="40" name="priority" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Low" sequence="0" value="low"/>
+                <element inactive_on_update="false" label="Normal" sequence="1" value="normal"/>
+                <element inactive_on_update="false" label="High" sequence="2" value="high"/>
+                <element inactive_on_update="false" label="Critical" sequence="3" value="critical"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Deployment Notes" max_length="4000" name="deployment_notes" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Completed On" max_length="40" name="completed_on" read_only="true" type="glide_date_time"/>
+        <index name="index">
+            <element name="requested_by"/>
+        </index>
+    </element>
+</database>

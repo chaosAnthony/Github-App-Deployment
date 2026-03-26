@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_module">
+    <sys_module action="INSERT_OR_UPDATE">
+        <content><![CDATA[import { gs } from '@servicenow/glide'
+
+var GitHubValidationAjax = Class.create();
+GitHubValidationAjax.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+
+    /**
+     * Validate GitHub repository access from client-side
+     */
+    validateRepository: function() {
+        try {
+            var repoUrl = this.getParameter('sysparm_repo_url');
+            var branch = this.getParameter('sysparm_branch') || 'main';
+            var token = this.getParameter('sysparm_token');
+
+            if (!repoUrl) {
+                return JSON.stringify({
+                    success: false,
+                    error: 'Repository URL is required'
+                });
+            }
+
+            // Import GitHubAPI for validation
+            var GitHubAPI = require('../github/github-api.js').GitHubAPI;
+            var githubAPI = new GitHubAPI(token);
+
+            // Validate repository
+            var validation = githubAPI.validateRepository(repoUrl, branch);
+
+            if (!validation.success) {
+                return JSON.stringify({
+                    success: false,
+                    error: validation.error
+                });
+            }
+
+            // Extract repository information
+            var suggestedScope = null;
+            var message = 'Repository is accessible';
+
+            if (validation.repository) {
+                var repo = validation.repository;
+                message = 'Repository: ' + repo.full_name + ', Branch: ' + branch + ', Last updated: ' + repo.updated_at;
+                
+                // Suggest a scope name based on repository name
+                suggestedScope = 'x_custom_' + repo.name.toLowerCase().replace(/[^a-z0-9]/g, '_');
+            }
+
+            return JSON.stringify({
+                success: true,
+                message: message,
+                suggested_scope: suggestedScope,
+                repository_info: validation.repository
+            });
+
+        } catch (error) {
+            gs.error('GitHubValidationAjax.validateRepository error: ' + error.message);
+            return JSON.stringify({
+                success: false,
+                error: 'Validation failed: ' + error.message
+            });
+        }
+    },
+
+    /**
+     * Get available branches for a repository
+     */
+    getBranches: function() {
+        try {
+            var repoUrl = this.getParameter('sysparm_repo_url');
+            var token = this.getParameter('sysparm_token');
+
+            if (!repoUrl) {
+                return JSON.stringify({
+                    success: false,
+                    error: 'Repository URL is required'
+                });
+            }
+
+            var GitHubAPI = require('../github/github-api.js').GitHubAPI;
+            var githubAPI = new GitHubAPI(token);
+            
+            // Parse repository URL
+            var parsed = GitHubAPI.parseRepoUrl(repoUrl);
+            if (!parsed.success) {
+                return JSON.stringify(parsed);
+            }
+
+            // Get branches
+            var branchResponse = githubAPI.getBranches(parsed.owner, parsed.repo);
+            if (!branchResponse.success) {
+                return JSON.stringify({
+                    success: false,
+                    error: 'Failed to fetch branches'
+                });
+            }
+
+            var branches = JSON.parse(branchResponse.body);
+            var branchList = [];
+            for (var i = 0; i < branches.length; i++) {
+                branchList.push({
+                    name: branches[i].name,
+                    commit_sha: branches[i].commit.sha
+                });
+            }
+
+            return JSON.stringify({
+                success: true,
+                branches: branchList
+            });
+
+        } catch (error) {
+            gs.error('GitHubValidationAjax.getBranches error: ' + error.message);
+            return JSON.stringify({
+                success: false,
+                error: 'Failed to get branches: ' + error.message
+            });
+        }
+    },
+
+    type: 'GitHubValidationAjax'
+});]]></content>
+        <external_source>false</external_source>
+        <path>x_165991_github_ap/x-165991-github-app-d/1.0.0/src/server/script-includes/github-validation-ajax.js</path>
+        <sys_class_name>sys_module</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-03-26 08:47:36</sys_created_on>
+        <sys_id>38349193d50249d5b711f81a4d772443</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_165991_github_ap/x-165991-github-app-d/1.0.0/src/server/script-includes/github-validation-ajax.js</sys_name>
+        <sys_package display_value="Github App D" source="x_165991_github_ap">bd85562a833b321063c11a30ceaad314</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Github App D">bd85562a833b321063c11a30ceaad314</sys_scope>
+        <sys_update_name>sys_module_38349193d50249d5b711f81a4d772443</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-03-26 08:47:36</sys_updated_on>
+    </sys_module>
+</record_update>

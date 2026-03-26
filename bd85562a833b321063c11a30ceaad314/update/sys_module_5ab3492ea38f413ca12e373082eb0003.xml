@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_module">
+    <sys_module action="INSERT_OR_UPDATE">
+        <content><![CDATA[import { gs, GlideHTTPRequest } from '@servicenow/glide'
+
+/**
+ * GitHub API utilities for repository operations
+ */
+export class GitHubAPI {
+    constructor(token = null) {
+        this.token = token || gs.getProperty('x_165991_github_ap.default_github_token', '')
+        this.baseUrl = gs.getProperty('x_165991_github_ap.github_api_base_url', 'https://api.github.com')
+    }
+
+    /**
+     * Make authenticated GitHub API request
+     */
+    makeRequest(endpoint, method = 'GET', payload = null) {
+        try {
+            const request = new GlideHTTPRequest()
+            request.setEndpoint(this.baseUrl + endpoint)
+            request.setHttpMethod(method)
+            
+            // Add authentication header
+            if (this.token) {
+                request.setRequestHeader('Authorization', 'Bearer ' + this.token)
+            }
+            request.setRequestHeader('Accept', 'application/vnd.github.v3+json')
+            request.setRequestHeader('User-Agent', 'ServiceNow-GitHubApp/1.0')
+
+            if (payload && (method === 'POST' || method === 'PUT' || method === 'PATCH')) {
+                request.setRequestBody(JSON.stringify(payload))
+                request.setRequestHeader('Content-Type', 'application/json')
+            }
+
+            const response = request.execute()
+            const responseBody = response.getBody()
+            const statusCode = response.getStatusCode()
+
+            gs.info('GitHub API Request - Status: ' + statusCode + ', Endpoint: ' + endpoint)
+
+            return {
+                statusCode: statusCode,
+                body: responseBody,
+                success: statusCode >= 200 && statusCode < 300
+            }
+        } catch (error) {
+            gs.error('GitHub API Request failed: ' + error.message)
+            return {
+                statusCode: 500,
+                body: JSON.stringify({ error: error.message }),
+                success: false
+            }
+        }
+    }
+
+    /**
+     * Get repository information
+     */
+    getRepository(owner, repo) {
+        const endpoint = '/repos/' + owner + '/' + repo
+        return this.makeRequest(endpoint)
+    }
+
+    /**
+     * Get repository branches
+     */
+    getBranches(owner, repo) {
+        const endpoint = '/repos/' + owner + '/' + repo + '/branches'
+        return this.makeRequest(endpoint)
+    }
+
+    /**
+     * Get specific branch information
+     */
+    getBranch(owner, repo, branch) {
+        const endpoint = '/repos/' + owner + '/' + repo + '/branches/' + branch
+        return this.makeRequest(endpoint)
+    }
+
+    /**
+     * Get repository contents
+     */
+    getContents(owner, repo, path = '', ref = 'main') {
+        const endpoint = '/repos/' + owner + '/' + repo + '/contents/' + path + '?ref=' + ref
+        return this.makeRequest(endpoint)
+    }
+
+    /**
+     * Download repository archive
+     */
+    downloadArchive(owner, repo, ref = 'main', format = 'zipball') {
+        const endpoint = '/repos/' + owner + '/' + repo + '/' + format + '/' + ref
+        return this.makeRequest(endpoint)
+    }
+
+    /**
+     * Parse GitHub repository URL to extract owner and repo name
+     */
+    static parseRepoUrl(url) {
+        try {
+            // Handle different GitHub URL formats
+            const patterns = [
+                /github\.com\/([^\/]+)\/([^\/]+?)(?:\.git)?(?:\/.*)?$/,
+                /github\.com\/([^\/]+)\/([^\/]+)/
+            ]
+
+            for (let pattern of patterns) {
+                const match = url.match(pattern)
+                if (match) {
+                    return {
+                        owner: match[1],
+                        repo: match[2].replace(/\.git$/, ''),
+                        success: true
+                    }
+                }
+            }
+
+            return {
+                owner: null,
+                repo: null,
+                success: false,
+                error: 'Invalid GitHub repository URL format'
+            }
+        } catch (error) {
+            gs.error('Error parsing GitHub URL: ' + error.message)
+            return {
+                owner: null,
+                repo: null,
+                success: false,
+                error: error.message
+            }
+        }
+    }
+
+    /**
+     * Validate repository access
+     */
+    validateRepository(repoUrl, branch = 'main') {
+        const parsed = GitHubAPI.parseRepoUrl(repoUrl)
+        if (!parsed.success) {
+            return parsed
+        }
+
+        const repoResponse = this.getRepository(parsed.owner, parsed.repo)
+        if (!repoResponse.success) {
+            return {
+                success: false,
+                error: 'Repository not accessible or does not exist'
+            }
+        }
+
+        const branchResponse = this.getBranch(parsed.owner, parsed.repo, branch)
+        if (!branchResponse.success) {
+            return {
+                success: false,
+                error: 'Branch "' + branch + '" not found in repository'
+            }
+        }
+
+        return {
+            success: true,
+            repository: JSON.parse(repoResponse.body),
+            branch: JSON.parse(branchResponse.body)
+        }
+    }
+}]]></content>
+        <external_source>false</external_source>
+        <path>x_165991_github_ap/x-165991-github-app-d/1.0.0/src/server/github/github-api.js</path>
+        <sys_class_name>sys_module</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-03-26 08:47:36</sys_created_on>
+        <sys_id>5ab3492ea38f413ca12e373082eb0003</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_165991_github_ap/x-165991-github-app-d/1.0.0/src/server/github/github-api.js</sys_name>
+        <sys_package display_value="Github App D" source="x_165991_github_ap">bd85562a833b321063c11a30ceaad314</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Github App D">bd85562a833b321063c11a30ceaad314</sys_scope>
+        <sys_update_name>sys_module_5ab3492ea38f413ca12e373082eb0003</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-03-26 08:47:36</sys_updated_on>
+    </sys_module>
+</record_update>
